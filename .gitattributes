@@ -1,0 +1,46 @@
+# Line endings, pinned so the repo behaves the same on every machine.
+#
+# Copied from `StopSleepApp` on 2026-08-22 for the same reason and with the same effect.
+#
+# Why it exists: every single `git add` printed
+#   warning: in the working copy of '<file>', LF will be replaced by CRLF the next time Git touches it
+# for every text file it touched. That is not a defect in the files — it is git's global
+# `core.autocrlf=true` on this machine announcing that it WOULD convert them, because nothing in
+# the repository said what the line endings should be. With dozens of files per commit the warning
+# buried real output.
+#
+# ⚠️ The fix is to state it here rather than to change `core.autocrlf`, and the difference matters:
+# a global git setting is a property of THIS MACHINE and travels with nobody. `.gitattributes` is
+# committed, so a second contributor — or a CI checkout — gets the same answer without configuring
+# anything.
+#
+# LF is chosen, not inherited: the index already stores LF for all 81 text files, so this pins what
+# is true today and makes the working tree match. Nothing is renormalised and no diff is produced.
+#
+# ⚠️ `gradlew.bat` does not exist here — this is a static site — but the `*.bat` rule is kept so the
+# three repos answer the line-ending question identically rather than each in its own way.
+
+* text=auto eol=lf
+
+# Windows batch files are the one exception — cmd.exe requires CRLF, and `gradlew.bat` is executed
+# directly by the build. Left as LF it fails in ways that do not name line endings.
+*.bat text eol=crlf
+
+# Binaries: marked explicitly so git never inspects or converts them. `binary` is shorthand for
+# `-text -diff`, which also stops them being rendered as garbage in a diff.
+*.png binary
+*.webp binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+*.jar binary
+*.keystore binary
+*.jks binary
+*.apk binary
+*.aab binary
+*.so binary

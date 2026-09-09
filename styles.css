@@ -1,0 +1,1013 @@
+/* ==========================================================================
+   SleepStop — Nokturn stylesheet ("moonlight on ink")
+   Shared across index.html, privacy.html, support.html.
+   Tokens mirror ../StopSleepApp/src/theme.ts — keep the two in sync.
+   ========================================================================== */
+
+/* ---- Display face (self-hosted) ----------------------------------------
+
+   ⚠️ SELF-HOSTED BECAUSE THE PAGE CONTRADICTED ITS OWN PRIVACY POLICY
+   (2026-09-04, found in a security/privacy review).
+
+   These three faces were loaded from fonts.googleapis.com / fonts.gstatic.com
+   until today — which handed Google the IP address and User-Agent of every
+   visitor, on the very page whose headline promise is "no server, no analytics,
+   no ads" and "everything stays on your own devices". The words were true about
+   the APP and false about the PAGE SAYING THEM. Nothing else on this site
+   contacts a third party, so removing this removed the last one.
+
+   Provenance, so nobody has to re-derive it: subset from the TTFs already on
+   disk in ../StopSleepApp/node_modules/@expo-google-fonts/cormorant-garamond
+   (the same family the app itself renders, so the two cannot drift), via
+   `python -m fontTools.subset --flavor=woff2` restricted to the Latin +
+   Latin-Ext ranges and the kern/liga/clig/calt features. 1.95 MB of TTF became
+   78 KB of woff2 across all three — SMALLER over the wire than the Google
+   request it replaces, which fetched five faces where the CSS below uses three.
+
+   ⚠️ LICENCE: SIL Open Font License 1.1, and self-hosting is REDISTRIBUTION,
+   which the OFL only permits with the licence alongside — hence
+   assets/fonts/OFL.txt. Do not delete it. Subsetting is a modification, allowed
+   here because Cormorant declares NO Reserved Font Name (checked in the licence
+   text itself, not assumed), so the family name may stay as it is.
+
+   400 is not decorative: .memo-sign, .scene-track and .scene-watch-face set the
+   display family without a weight and therefore inherit it. Adding a weight to
+   this stylesheet that has no @font-face here now means a SILENT fallback to
+   Georgia rather than a missing file — check this block when you do.
+   ------------------------------------------------------------------------ */
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('assets/fonts/cormorant-garamond-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('assets/fonts/cormorant-garamond-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('assets/fonts/cormorant-garamond-600.woff2') format('woff2');
+}
+
+/* ---- Design tokens ------------------------------------------------------ */
+:root {
+  /* Ink background gradient */
+  --bg:          #0a0d1a;
+  --bg-mid:      #0e1226;
+  --bg-deep:     #131834;
+
+  /* Surfaces */
+  --card:        #151a30;
+  --card-border: #2a3157;
+
+  /* Moon-gold accent */
+  --accent:      #e0c48c;
+  --accent-deep: #c9a55e;
+  --on-accent:   #17130a;
+
+  /* Text */
+  --text-prime:  #e7ecfa;
+  --text-muted:  #8fa3d9;
+  --text-faint:  #6d7ba6;
+
+  /* State */
+  --success:     #7fd8a4;
+  --danger:      #e08a8a;
+
+  /* Radii (theme.ts radius) */
+  --radius-sm:   8px;
+  --radius-md:   10px;
+  --radius-lg:   16px;
+  --radius-pill: 999px;
+
+  /* Spacing (theme.ts 4-pt scale) */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  12px;
+  --space-lg:  16px;
+  --space-xl:  24px;
+  --space-2xl: 32px;
+  --space-3xl: 48px;
+  --space-4xl: 72px;
+
+  /* Type */
+  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+               Arial, sans-serif;
+
+  /* Layout */
+  --measure: 1120px;     /* max content width */
+  --measure-read: 720px; /* narrow measure for long-form reading */
+}
+
+/* ---- Reset / base ------------------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-prime);
+  background-color: var(--bg);
+  /* Ink gradient + a soft radial glow top-center. */
+  background-image:
+    radial-gradient(120% 70% at 50% -10%,
+      rgba(224, 196, 140, 0.10) 0%,
+      rgba(224, 196, 140, 0.00) 55%),
+    linear-gradient(180deg,
+      var(--bg) 0%,
+      var(--bg-mid) 45%,
+      var(--bg-deep) 100%);
+  background-repeat: no-repeat;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden; /* body never scrolls horizontally */
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+/* ---- Accessibility ------------------------------------------------------ */
+/* Visible keyboard focus only (mouse clicks stay clean via :focus-visible). */
+a:focus-visible,
+.btn:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* Skip link — off-screen until focused, then pinned top-left. */
+.skip-link {
+  position: absolute;
+  left: var(--space-md);
+  top: -120px;
+  z-index: 100;
+  padding: 0.6em 1.1em;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+  transition: top 0.15s ease;
+}
+.skip-link:focus { top: var(--space-md); }
+
+/* Respect a reduced-motion preference: drop transforms, transitions, smooth scroll. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .btn:hover { transform: none; }
+  .feature-media > .phone-frame:hover,
+  .phone-pair .phone-frame:hover,
+  .device-combo:hover { transform: none; }
+}
+
+/* ---- Typography --------------------------------------------------------- */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.1;
+  margin: 0 0 var(--space-lg);
+  color: var(--text-prime);
+}
+
+h1 { font-size: clamp(2.4rem, 6vw, 4rem); letter-spacing: 0.8px; line-height: 1.16; }
+h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); }
+h3 { font-size: clamp(1.3rem, 2.5vw, 1.6rem); }
+
+p { margin: 0 0 var(--space-lg); }
+
+.eyebrow {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0 0 var(--space-lg);
+}
+
+.lead { color: var(--text-muted); font-size: 1.12rem; }
+.muted { color: var(--text-muted); }
+.faint { color: var(--text-faint); }
+
+/* ---- Layout ------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--measure);
+  margin-inline: auto;
+  padding-inline: var(--space-xl);
+}
+
+.section { padding-block: var(--space-4xl); }
+/* Pull the first section up under the hero — the hero already leaves generous air below. */
+.hero + .section { padding-top: var(--space-2xl); }
+
+/* ---- Buttons ------------------------------------------------------------ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  padding: 0.85em 1.6em;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease,
+    border-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.btn-primary {
+  color: var(--on-accent);
+  background-image: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+  box-shadow: 0 8px 24px rgba(224, 196, 140, 0.18);
+}
+.btn-primary:hover { box-shadow: 0 10px 30px rgba(224, 196, 140, 0.28); }
+
+.btn-secondary {
+  color: var(--text-prime);
+  background: transparent;
+  border-color: var(--card-border);
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+.btn-sm { padding: 0.6em 1.15em; font-size: 0.9rem; }
+
+/* ---- Top navigation ----------------------------------------------------- */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(10px);
+  background: rgba(10, 13, 26, 0.72);
+  border-bottom: 1px solid rgba(42, 49, 87, 0.6);
+}
+.nav-inner {
+  max-width: var(--measure);
+  margin-inline: auto;
+  padding: var(--space-md) var(--space-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.brand-mark { width: 34px; height: 34px; }
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-prime);
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+}
+.nav-links a:not(.btn) {
+  color: var(--text-muted);
+  font-size: 0.96rem;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+.nav-links a:not(.btn):hover { color: var(--text-prime); }
+
+/* ---- Footer ------------------------------------------------------------- */
+.site-footer {
+  border-top: 1px solid var(--card-border);
+  margin-top: var(--space-4xl);
+  background: rgba(10, 13, 26, 0.5);
+}
+.footer-inner {
+  max-width: var(--measure);
+  margin-inline: auto;
+  padding: var(--space-3xl) var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+}
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-prime);
+}
+.footer-brand img { width: 26px; height: 26px; }
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xl);
+}
+.footer-links a {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  transition: color 0.15s ease;
+}
+.footer-links a:hover { color: var(--accent); }
+.footer-fine { color: var(--text-faint); font-size: 0.86rem; margin: 0; max-width: 60ch; }
+.footer-copy { color: var(--text-faint); font-size: 0.86rem; margin: 0; }
+
+/* ==========================================================================
+   Hero (Home)
+   ========================================================================== */
+.hero {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding-block: var(--space-4xl) var(--space-3xl);
+}
+/* CSS star field — faint scattered dots, no images. */
+.hero-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1.4px 1.4px at 12% 22%, rgba(231, 236, 250, 0.55), transparent),
+    radial-gradient(1.2px 1.2px at 82% 16%, rgba(231, 236, 250, 0.45), transparent),
+    radial-gradient(1.6px 1.6px at 68% 38%, rgba(224, 196, 140, 0.55), transparent),
+    radial-gradient(1.1px 1.1px at 26% 52%, rgba(231, 236, 250, 0.40), transparent),
+    radial-gradient(1.3px 1.3px at 44% 12%, rgba(224, 196, 140, 0.45), transparent),
+    radial-gradient(1.2px 1.2px at 90% 60%, rgba(231, 236, 250, 0.35), transparent),
+    radial-gradient(1.5px 1.5px at 8% 74%, rgba(224, 196, 140, 0.40), transparent),
+    radial-gradient(1.1px 1.1px at 58% 68%, rgba(231, 236, 250, 0.35), transparent),
+    radial-gradient(1.3px 1.3px at 34% 84%, rgba(231, 236, 250, 0.30), transparent),
+    radial-gradient(1.2px 1.2px at 76% 82%, rgba(224, 196, 140, 0.35), transparent);
+  background-repeat: no-repeat;
+}
+/* Split hero: copy on the left, the night scene on the right (stacks on small screens). */
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: center;
+  gap: var(--space-3xl);
+  text-align: left;
+}
+/* Slightly smaller than the global h1 so the headline sets in two clean lines. */
+.hero h1 { font-size: clamp(2.2rem, 4.6vw, 3.4rem); max-width: 21ch; }
+.hero-sub {
+  max-width: 50ch;
+  margin: var(--space-lg) 0 var(--space-2xl);
+  color: var(--text-muted);
+  font-size: 1.18rem;
+}
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+/* ---- Hero night scene (drawn, no screenshots) ---------------------------- */
+.hero-scene {
+  position: relative;
+  width: min(100%, 400px);
+  margin-inline: auto;
+  padding: 52px 0 40px; /* air for the moon above and the watch below */
+}
+/* Upper-LEFT on purpose: the phone owns the right half and the watch the lower-left
+   corner, so this is the only open sky — on the right the moon slid behind the phone
+   bezel (maintainer feedback 2026-07-17). z-index keeps it in front even if a few px
+   of the float animation graze the phone's corner. */
+.scene-moon {
+  position: absolute;
+  top: 0;
+  left: -6%;
+  z-index: 2;
+  width: clamp(76px, 8vw, 104px);
+  filter: drop-shadow(0 0 36px rgba(224, 196, 140, 0.3));
+  animation: moon-float 8s ease-in-out infinite;
+}
+@keyframes moon-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+
+/* The phone playing the audiobook — same bezel language as .phone-frame. */
+.scene-phone {
+  position: relative;
+  z-index: 1;
+  width: min(78%, 292px);
+  margin-left: auto;  /* sit right so the watch can own the lower-left corner */
+  margin-right: 8px;
+  border-radius: 34px;
+  padding: 9px;
+  background: linear-gradient(155deg, #3a3f4d 0%, #20242f 45%, #12151d 100%);
+  box-shadow:
+    0 26px 60px rgba(0, 0, 0, 0.55),
+    inset 0 2px 3px rgba(255, 255, 255, 0.16),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.6);
+}
+.scene-screen {
+  border-radius: 26px;
+  background: linear-gradient(180deg, #0c1020 0%, #131834 100%);
+  padding: var(--space-xl) var(--space-lg) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.scene-label {
+  margin: 0 0 var(--space-lg);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.66rem;
+  color: var(--text-faint);
+}
+.scene-cover {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius-lg);
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(80% 80% at 50% 20%, rgba(224, 196, 140, 0.16), transparent 70%),
+    var(--card);
+  border: 1px solid var(--card-border);
+  margin-bottom: var(--space-lg);
+}
+.scene-cover img { width: 40px; opacity: 0.9; }
+.scene-track {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--text-prime);
+}
+.scene-sub { margin: 2px 0 var(--space-lg); font-size: 0.78rem; color: var(--text-muted); }
+.scene-progress {
+  width: 100%;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--card-border);
+  overflow: hidden;
+}
+.scene-progress span {
+  display: block;
+  width: 36%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent-deep), var(--accent));
+}
+.scene-times {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  margin-top: 6px;
+}
+.scene-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+  margin: var(--space-md) 0 var(--space-lg);
+}
+.scene-controls svg { width: 20px; height: 20px; fill: var(--text-muted); }
+.scene-play {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background-image: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+  box-shadow: 0 8px 24px rgba(224, 196, 140, 0.25);
+}
+.scene-play svg { width: 22px; height: 22px; fill: var(--on-accent); margin-left: 3px; }
+.scene-chip {
+  padding: 0.45em 1em;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(224, 196, 140, 0.35);
+  background: rgba(224, 196, 140, 0.1);
+  color: var(--accent);
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+/* The watch that noticed — overlapping the phone's lower-left corner. */
+.scene-watch {
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  z-index: 2;
+  width: 118px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 8px;
+  background: linear-gradient(145deg, #4a4f5e 0%, #262b38 45%, #14171f 100%);
+  box-shadow:
+    0 20px 44px rgba(0, 0, 0, 0.55),
+    inset 0 2px 3px rgba(255, 255, 255, 0.18),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.6);
+}
+.scene-watch-face {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(90% 90% at 50% 30%, #10142a 0%, #05070d 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+.scene-watch-face img { width: 26px; }
+.scene-watch-face span {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--accent);
+}
+
+/* Status pill */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-2xl);
+  padding: 0.5em 1.1em;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--card-border);
+  background: rgba(21, 26, 48, 0.6);
+  color: var(--text-muted);
+  font-size: 0.86rem;
+}
+.status-pill::before {
+  content: "";
+  flex: 0 0 auto; /* keep the dot a perfect circle when the label wraps */
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+/* Shared centered section heading */
+.section-head { text-align: center; max-width: 46ch; margin: 0 auto var(--space-2xl); }
+/* :not(.eyebrow) — otherwise this would override the eyebrow's gold color and its
+   bottom margin (the eyebrow is also a <p>), squashing it onto the heading. */
+.section-head p:not(.eyebrow) { color: var(--text-muted); margin: 0; }
+
+/* Subtle tinted band to alternate section rhythm (Portal pattern) */
+.section-alt {
+  background: rgba(21, 26, 48, 0.35);
+  border-block: 1px solid rgba(42, 49, 87, 0.4);
+}
+
+/* ---- What it is: checklist ---------------------------------------------- */
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 860px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+}
+.check-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-xl);
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+}
+.check-list li::before {
+  content: "\2713"; /* ✓ */
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin-top: 2px;
+  border-radius: 50%;
+  background: rgba(224, 196, 140, 0.14);
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.check-list strong { color: var(--text-prime); font-weight: 600; }
+.check-list span { color: var(--text-muted); }
+
+/* ---- How it works: numbered steps --------------------------------------- */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl);
+}
+.step {
+  padding: var(--space-xl);
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+}
+.step-num {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+  margin-bottom: var(--space-md);
+}
+.step h3 { margin-bottom: var(--space-sm); font-size: 1.35rem; }
+.step p { color: var(--text-muted); margin: 0; }
+
+/* ---- Feature rows (alternating media / text) ---------------------------- */
+.feature-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4xl);
+  align-items: center;
+}
+.feature-row + .feature-row { margin-top: var(--space-4xl); }
+/* Flip every second row so media and text alternate sides. */
+.feature-row:nth-child(even) .feature-media { order: 2; }
+
+.feature-text h3 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
+.feature-text p:not(.eyebrow) { color: var(--text-muted); margin: 0; }
+
+/* Portrait phone-screenshot placeholder. */
+.shot-frame {
+  width: 100%;
+  max-width: 264px;
+  margin-inline: auto;
+  aspect-ratio: 9 / 19;
+  border-radius: 30px;
+  border: 1px solid var(--card-border);
+  background:
+    radial-gradient(90% 55% at 50% 0%, rgba(224, 196, 140, 0.08), transparent 60%),
+    var(--card);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: var(--space-xl);
+  text-align: center;
+}
+.shot-frame img { width: 44px; opacity: 0.35; }
+.shot-frame span { color: var(--text-faint); font-size: 0.9rem; }
+.shot-frame small { color: var(--text-faint); opacity: 0.7; font-size: 0.75rem; }
+
+/* Portrait phone — a dark bezel around a captured app screen. The screenshots are
+   pre-cropped to just the app UI (OS status bar + nav bar removed), so the frame shows
+   the whole image at its natural height — no object-fit cropping. */
+.phone-frame {
+  width: 100%;
+  max-width: 260px;
+  margin-inline: auto;
+  border-radius: 34px;
+  padding: 9px;
+  background: linear-gradient(155deg, #3a3f4d 0%, #20242f 45%, #12151d 100%);
+  box-shadow:
+    0 26px 60px rgba(0, 0, 0, 0.55),
+    inset 0 2px 3px rgba(255, 255, 255, 0.16),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.6);
+}
+.phone-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 26px;
+  background: var(--bg);
+}
+
+/* Round watch face — a metallic bezel ring around a captured Epix Pro screen.
+   Bezel kept THIN (8px): the captured screen already carries its own black margin,
+   so a wide ring read as a chunky toy watch (maintainer feedback 2026-07-17). */
+.watch-frame {
+  width: 100%;
+  max-width: 300px;
+  margin-inline: auto;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 8px;
+  background: linear-gradient(145deg, #4a4f5e 0%, #262b38 45%, #14171f 100%);
+  box-shadow:
+    0 26px 60px rgba(0, 0, 0, 0.55),
+    inset 0 2px 3px rgba(255, 255, 255, 0.18),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.6);
+}
+.watch-frame img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: block;
+  background: #000;
+}
+.feature-caption {
+  margin: var(--space-xl) 0 0;
+  text-align: center;
+  color: var(--text-faint);
+  font-size: 0.82rem;
+  position: relative;
+  z-index: 0; /* sits behind the frame's hover z-index, so a slight zoom overlap tucks under it */
+}
+
+/* Two phones side by side (row 1): the same Home screen in its two modes — a Garmin
+   watch driving detection, or the phone doing it alone. Each frame shrinks to make room
+   for its neighbour; wraps to a stack on narrow screens via .feature-row's own breakpoint. */
+.phone-pair {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+}
+.phone-pair-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  flex: 1 1 140px;
+  max-width: 180px;
+}
+.phone-pair .phone-frame { max-width: 100%; margin-inline: 0; }
+.pair-label {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  text-align: center;
+}
+
+/* Phone + watch paired (row 2): the phone screen with the watch face overlapping
+   its lower-right corner — "history on the phone, the trace on the watch". */
+.device-combo {
+  position: relative;
+  width: min(100%, 288px);
+  margin-inline: auto;
+  padding: 0 32px 32px 0; /* room for the watch hanging off the lower-right */
+}
+.device-combo .phone-frame { margin: 0; max-width: 100%; }
+.device-combo .watch-frame {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(38%, 120px); /* an accent badge, not a second focal point */
+  max-width: none;
+  margin: 0;
+}
+
+/* ---- Founder memo -------------------------------------------------------- */
+.memo-card {
+  max-width: 720px;
+  margin-inline: auto;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: clamp(24px, 5vw, 48px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+.memo-card p { color: var(--text-muted); }
+.memo-card p.memo-lead { color: var(--text-prime); font-size: 1.15rem; }
+.memo-card p:last-of-type { margin-bottom: 0; }
+.memo-sign {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--accent);
+  margin-top: var(--space-xl);
+}
+
+/* ---- Final CTA (dawn bookend) ------------------------------------------- */
+.cta-final {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding-block: var(--space-4xl);
+  /* Warm dawn glow rising from the horizon — the morning end of the night. */
+  background:
+    radial-gradient(65% 85% at 50% 100%,
+      rgba(224, 196, 140, 0.24) 0%,
+      rgba(201, 165, 94, 0.11) 34%,
+      transparent 68%);
+}
+.cta-final h2 { margin-bottom: var(--space-md); }
+.cta-final p { color: var(--text-muted); max-width: 44ch; margin: 0 auto var(--space-xl); }
+
+/* ==========================================================================
+   Generic page header (Privacy / Support)
+   ========================================================================== */
+.page-header {
+  padding-block: var(--space-4xl) var(--space-xl);
+  text-align: center;
+}
+.page-header p { color: var(--text-muted); max-width: 52ch; margin-inline: auto; }
+
+/* Body wrapper for the Privacy/Support pages (header already gives top space) */
+.page-body { padding-bottom: var(--space-4xl); }
+
+/* Long-form reading column */
+.prose {
+  max-width: var(--measure-read);
+  margin-inline: auto;
+}
+.prose h2 {
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+  margin: var(--space-2xl) 0 var(--space-md);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--card-border);
+}
+.prose p,
+.prose li { color: var(--text-muted); }
+.prose strong { color: var(--text-prime); font-weight: 600; }
+.prose ul { padding-left: 1.25em; margin: 0 0 var(--space-lg); }
+.prose li { margin-bottom: var(--space-sm); }
+.prose li::marker { color: var(--accent); }
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.prose-label { margin-bottom: var(--space-sm); }
+.effective-date { color: var(--text-faint); font-size: 0.9rem; margin-bottom: var(--space-xl); }
+
+/* ---- Support: contact card + FAQ accordion ------------------------------ */
+.support-wrap { max-width: 780px; margin-inline: auto; }
+
+.contact-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  padding: var(--space-xl);
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-2xl);
+}
+.contact-card h2 { margin: var(--space-xs) 0 var(--space-sm); font-size: 1.6rem; }
+.contact-card p { color: var(--text-muted); margin: 0; max-width: 46ch; }
+/* Button says what it DOES ("Send an email"), the address itself sits underneath as a
+   small copyable line — for people whose phone has no mail app wired to mailto:. */
+.contact-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.contact-card .contact-mail-note {
+  color: var(--text-faint);
+  font-size: 0.8rem;
+  letter-spacing: 0.3px;
+  user-select: all;
+}
+
+.faq-title { margin-bottom: var(--space-lg); }
+
+.faq details {
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  margin-bottom: var(--space-md);
+}
+.faq summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-xl);
+  font-weight: 600;
+  color: var(--text-prime);
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+";
+  flex: 0 0 auto;
+  color: var(--accent);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.faq details[open] summary::after { content: "\2212"; } /* − */
+.faq details[open] summary { color: var(--accent); }
+.faq-body { padding: 0 var(--space-xl) var(--space-lg); }
+.faq-body p,
+.faq-body li { color: var(--text-muted); }
+.faq-body p:last-child { margin-bottom: 0; }
+.faq-body ul { padding-left: 1.25em; margin: 0; }
+.faq-body li { margin-bottom: var(--space-sm); }
+.faq-body li:last-child { margin-bottom: 0; }
+.faq-body li::marker { color: var(--accent); }
+.faq-body strong { color: var(--text-prime); }
+
+.support-foot { margin-top: var(--space-2xl); color: var(--text-muted); }
+.support-foot a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+/* Simple placeholder frame for content still to come */
+.placeholder {
+  max-width: var(--measure-read);
+  margin: var(--space-xl) auto;
+  padding: var(--space-2xl);
+  border: 1px dashed var(--card-border);
+  border-radius: var(--radius-lg);
+  background: rgba(21, 26, 48, 0.4);
+  color: var(--text-faint);
+  text-align: center;
+}
+
+/* ---- Hover motion (killed under reduced-motion) --------------------------
+   A real magnification, not a decorative lift: tester feedback said the subtle
+   1.015 zoom "adds nothing" — if the screens react at all, they should grow
+   enough to actually read the UI details. The site stays non-interactive
+   otherwise (no lightbox); this is the whole affordance. */
+.feature-media > .phone-frame,
+.phone-pair .phone-frame,
+.device-combo {
+  position: relative;
+  z-index: 1;
+  transform-origin: 50% 100%; /* grow upward from the bottom edge, away from the caption below */
+  transition: transform 0.35s ease;
+}
+.feature-media > .phone-frame:hover,
+.phone-pair .phone-frame:hover,
+.device-combo:hover {
+  transform: translateY(-10px) scale(1.09);
+  z-index: 2;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 960px) {
+  /* Stack the hero: copy centered on top, scene below. */
+  .hero-inner { grid-template-columns: 1fr; text-align: center; }
+  .hero h1 { margin-inline: auto; }
+  .hero-sub { margin-inline: auto; }
+  .hero-cta { justify-content: center; }
+  .hero-scene { width: min(100%, 340px); margin-top: var(--space-lg); }
+}
+
+@media (max-width: 860px) {
+  .steps { grid-template-columns: 1fr; }
+  /* Stack feature rows; keep media above text consistently (reset the flip). */
+  .feature-row { grid-template-columns: 1fr; gap: var(--space-xl); }
+  .feature-row:nth-child(even) .feature-media { order: 0; }
+  .feature-row + .feature-row { margin-top: var(--space-3xl); }
+}
+
+@media (max-width: 640px) {
+  .check-list { grid-template-columns: 1fr; }
+  /* Stack the nav into two centered rows (brand over links) so nothing can
+     overflow the viewport. The CTA is dropped — it's repeated in the hero. */
+  .site-nav { position: static; }
+  .nav-inner {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    padding-inline: var(--space-lg);
+  }
+  .brand-name { font-size: 1.35rem; }
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-lg);
+  }
+  .nav-links .nav-cta { display: none; }
+
+  .container { padding-inline: var(--space-lg); }
+  .section { padding-block: var(--space-3xl); }
+
+  /* Stack the footer top so the link row can't clip off the right edge. */
+  .footer-inner { padding-inline: var(--space-lg); }
+  .footer-top { flex-direction: column; align-items: flex-start; gap: var(--space-lg); }
+}

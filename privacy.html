@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy - SleepStop</title>
+  <meta name="description" content="SleepStop keeps everything on your own devices: no server, no analytics, no ads. Read the full privacy policy." />
+  <meta name="theme-color" content="#0a0d1a" />
+
+  <!-- Social / link preview (Open Graph + Twitter).
+       NOTE for hosting: add <meta property="og:url" content="<page URL>"> and switch
+       og:image / twitter:image to the ABSOLUTE https URL - most scrapers require it. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="SleepStop" />
+  <meta property="og:title" content="Privacy Policy - SleepStop" />
+  <meta property="og:description" content="SleepStop keeps everything on your own devices: no server, no analytics, no ads." />
+  <meta property="og:image" content="assets/og-cover.png" />
+  <meta property="og:image:width" content="2400" />
+  <meta property="og:image:height" content="1260" />
+  <meta property="og:image:alt" content="SleepStop - a gold crescent moon on a night-sky gradient." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Privacy Policy - SleepStop" />
+  <meta name="twitter:description" content="SleepStop keeps everything on your own devices: no server, no analytics, no ads." />
+  <meta name="twitter:image" content="assets/og-cover.png" />
+
+  <link rel="icon" type="image/png" href="assets/moon.png" />
+  <link rel="apple-touch-icon" href="assets/moon.png" />
+
+  <!-- Cormorant Garamond is self-hosted (@font-face at the top of styles.css, files in
+       assets/fonts/). It came from Google Fonts until 2026-09-04 — on THIS page above all, which
+       tells the reader nothing leaves their device while quietly handing Google their IP address.
+       Do not reintroduce a fonts.googleapis.com link here; see the note in styles.css. -->
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ==================== Shared nav ==================== -->
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">
+        <img class="brand-mark" src="assets/moon.png" alt="" />
+        <span class="brand-name">SleepStop</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-how" href="index.html#how-it-works">How it works</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="support.html">Support</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="index.html#join">Join the waitlist</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <header class="page-header container">
+      <h1>Privacy Policy</h1>
+      <p>SleepStop keeps everything on your own devices - no server, no analytics, no ads.</p>
+    </header>
+
+    <section class="page-body">
+      <div class="container">
+        <article class="prose">
+          <p class="effective-date">Effective date: 3 September 2026</p>
+
+          <p>SleepStop is a two-part application: a <strong>phone app</strong> (Android) that
+            mutes whatever audio is playing when you fall asleep, and a companion
+            <strong>smartwatch app</strong> (currently Garmin) that senses when you have fallen
+            asleep and tells the phone to mute. This policy explains what the apps access, why,
+            and where that information goes. In short: <strong>SleepStop keeps everything on
+            your own devices. It has no server, collects no analytics, shows no ads, and never
+            sells or shares your data.</strong></p>
+
+          <p>In this policy, "we"/"the developer" refers to the developer of SleepStop, and
+            "you" refers to the person using it.</p>
+
+          <h2>What information the apps access, and why</h2>
+          <p class="prose-label"><strong>On the watch (smartwatch app, currently Garmin):</strong></p>
+          <ul>
+            <li><strong>Heart rate and resting heart rate</strong> - read to detect the drop
+              and stability in heart rate that accompany falling asleep, and to calibrate the
+              sleep threshold to your own body.</li>
+            <li><strong>Activity (step count / movement)</strong> - read to tell "lying still"
+              apart from "moving/awake".</li>
+            <li><strong>Stress and respiration rate</strong> - read only as reference signals
+              recorded alongside the trace; they help us understand a night, and are not used
+              to sell or profile you.</li>
+          </ul>
+          <p class="prose-label"><strong>On the phone (Android app):</strong></p>
+          <ul>
+            <li><strong>Audio focus / which app is currently playing sound</strong> - used
+              solely to pause/mute that audio when a "fell asleep" signal arrives. The app does
+              not read, record, or transmit the audio itself.</li>
+            <li><strong>Notification access (a special permission you grant separately, not a
+              pop-up)</strong> - if you turn on <em>Wind the sound back</em>, SleepStop asks for
+              this so it can see which app is playing and its track title/position, in order to
+              seek that audio back to roughly where you fell asleep, and to undo a mute you tap
+              "I was awake" on. <strong>SleepStop reads only this playback information - never
+              the content of your notifications</strong> (messages, emails, or anything else). You
+              can revoke this at any time in Android's notification-access settings, and rewinding
+              simply stops working until you grant it again.</li>
+            <li><strong>Post notifications</strong> - a separate, ordinary permission used only
+              to show the "sleep monitor is running" notification Android requires for a
+              background service, and the brief "I was awake - resume" offer after a mute.</li>
+          </ul>
+          <p>The apps do <strong>not</strong> access your contacts, location, microphone,
+            camera, photos, messages, or any account credentials.</p>
+
+          <h2>Where the information goes</h2>
+          <p>All information stays <strong>on your own devices</strong>:</p>
+          <ul>
+            <li>The watch records a heart-rate/activity trace locally on the watch itself, in the
+              watch app's own storage, and sends it, plus a "fell asleep" event, to the phone over
+              a <strong>local Bluetooth (BLE)</strong> connection relayed by your watch's companion
+              app on the phone (currently Garmin Connect Mobile).</li>
+            <li>The phone stores your <strong>settings</strong> and a <strong>history of mute
+              events</strong> <strong>locally</strong> on the phone (Android app storage). When
+              <em>Wind the sound back</em> is on, that history includes the app name and
+              track/episode title read via Notification access above, and where playback
+              resumed - so History can show you what happened. Any received watch trace records
+              are stored locally the same way. This data powers the History and Night graph
+              screens and never leaves the phone.</li>
+            <li>The phone sends a little information <strong>back to the watch</strong> over that
+              same local Bluetooth link: that you tapped "I was awake" on a stop, that a stop
+              silenced nothing, and the sleep hours you've set - so the watch can
+              correct itself and know when to expect you to sleep. These are signals and
+              settings, never recordings: no audio, no notification content, and nothing about
+              what you were listening to.</li>
+          </ul>
+          <p>There is <strong>no SleepStop server or cloud</strong>. Your data is
+            <strong>not</strong> uploaded to us, <strong>not</strong> shared with third parties,
+            <strong>not</strong> used for advertising, and <strong>not</strong> sold. SleepStop
+            contains no analytics, tracking, or third-party advertising SDKs.</p>
+
+          <h2>Relationship to Garmin</h2>
+          <p>SleepStop's watch app runs on the Garmin Connect IQ platform and communicates with
+            the phone through the <strong>Garmin Connect Mobile</strong> app. Any data that your
+            Garmin watch or Garmin Connect syncs to Garmin's own cloud (for example your
+            heart-rate or sleep history in the Garmin Connect app) is collected and governed by
+            <strong>Garmin's own privacy policy</strong>, not this one. SleepStop only
+            <strong>receives</strong> Bluetooth messages through the Connect IQ SDK; it does not
+            access your Garmin account or Garmin's cloud services.</p>
+
+          <h2>Android permissions we request, and why</h2>
+          <ul>
+            <li><strong>Foreground service (special use)</strong> - to keep the sleep monitor /
+              watch receiver running while your music app is in front and the screen is off;
+              this is what lets muting work at night.</li>
+            <li><strong>Notification access</strong> (see above) - optional, only for
+              <em>Wind the sound back</em> and the undo offer.</li>
+            <li><strong>Post notifications</strong> - to display the required ongoing
+              foreground-service notification, and the brief undo offer after a mute.</li>
+            <li><strong>Ignore battery optimizations (requested, optional)</strong> - overnight
+              sleep detection is the app's whole purpose, and Android's Doze mode can throttle a
+              background app's timers to once every several minutes, which is too slow for
+              reliable detection. You may decline it; the app will still run but may be less
+              reliable.</li>
+            <li><strong>Wake lock</strong> - briefly keeps the processor awake while a rewind
+              steps back through several chapters, a few seconds at most, so the sequence
+              cannot stall for minutes if the phone falls back asleep mid-sequence.</li>
+            <li><strong>Vibrate</strong> - for optional feedback.</li>
+            <li><strong>Internet</strong> - required by the Garmin Connect IQ SDK to relay the
+              watch's Bluetooth message through the Garmin Connect Mobile app, and present as a
+              standard Android/React Native toolchain default. <strong>SleepStop itself makes no
+              network calls and has no server to send data to.</strong></li>
+          </ul>
+
+          <h2>For opt-in beta testers only</h2>
+          <p><strong>This section does not describe the app you install as an ordinary user -
+            that version cannot do any of it.</strong> Collecting raw traces is not a feature we
+            ship switched off: the code for it is not built into the public app at all. It exists
+            only in a separate build handed directly to testers.</p>
+          <p>A small number of people helping us test SleepStop before release follow instructions
+            we send them directly to additionally collect the raw heart-rate/activity trace the
+            watch already records, and to share that file with us - by email or another method
+            described in those instructions - so we can improve how accurately SleepStop detects
+            sleep.</p>
+          <p>If you are testing SleepStop and a trace file reaches us this way, we use it only to
+            tune detection accuracy, keep it only as long as that work needs it, and can delete
+            it on request - write to <strong>sleepstop.app@gmail.com</strong>.</p>
+
+          <h2>Data retention and deletion</h2>
+          <p>Because all data is local, <strong>you are in full control</strong>:</p>
+          <ul>
+            <li>Use <strong>Clear history</strong> on the phone's History screen to erase the
+              stored mute-event history.</li>
+            <li><strong>Uninstalling</strong> the phone app removes its settings, history, and
+              any received trace records.</li>
+            <li><strong>Uninstalling</strong> the watch app removes the locally stored trace on
+              the watch.</li>
+          </ul>
+          <p>We keep no copies, because we never receive any copy in the first place.</p>
+
+          <h2>Children</h2>
+          <p>SleepStop is not directed at children and is not intended for use by children under
+            the age of 16.</p>
+
+          <h2>Changes to this policy</h2>
+          <p>If this policy changes, we will update the "Effective date" above and post the new
+            version at the same location. Material changes will be reflected before a new app
+            version that relies on them is released.</p>
+
+          <h2>Contact</h2>
+          <p>Questions about this policy or your data: <strong>sleepstop.app@gmail.com</strong></p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== Shared footer ==================== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <a class="footer-brand" href="index.html">
+          <img src="assets/moon.png" alt="" />
+          <span>SleepStop</span>
+        </a>
+        <nav class="footer-links">
+          <a href="privacy.html">Privacy</a>
+          <a href="support.html">Support</a>
+          <a href="support.html#contact">Contact</a>
+        </nav>
+      </div>
+      <p class="footer-fine">
+        Independent app, not affiliated with Garmin. Garmin and Connect IQ are
+        trademarks of Garmin Ltd.
+      </p>
+      <p class="footer-copy">© 2026 SleepStop</p>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support - SleepStop</title>
+  <meta name="description" content="Help with SleepStop: battery settings, detection tuning, install, and what you need. Contact the developer." />
+  <meta name="theme-color" content="#0a0d1a" />
+
+  <!-- Social / link preview (Open Graph + Twitter).
+       NOTE for hosting: add <meta property="og:url" content="<page URL>"> and switch
+       og:image / twitter:image to the ABSOLUTE https URL - most scrapers require it. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="SleepStop" />
+  <meta property="og:title" content="Support - SleepStop" />
+  <meta property="og:description" content="Setup help and answers to the questions testers ask most - battery settings, detection tuning, install." />
+  <meta property="og:image" content="assets/og-cover.png" />
+  <meta property="og:image:width" content="2400" />
+  <meta property="og:image:height" content="1260" />
+  <meta property="og:image:alt" content="SleepStop - a gold crescent moon on a night-sky gradient." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Support - SleepStop" />
+  <meta name="twitter:description" content="Setup help and answers to the questions testers ask most." />
+  <meta name="twitter:image" content="assets/og-cover.png" />
+
+  <link rel="icon" type="image/png" href="assets/moon.png" />
+  <link rel="apple-touch-icon" href="assets/moon.png" />
+
+  <!-- Cormorant Garamond is self-hosted (@font-face at the top of styles.css, files in
+       assets/fonts/). It came from Google Fonts until 2026-09-04, which sent every visitor's IP
+       and User-Agent to Google on a page that promises nothing leaves your device. Do not
+       reintroduce a fonts.googleapis.com link here; see the note in styles.css. -->
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ==================== Shared nav ==================== -->
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">
+        <img class="brand-mark" src="assets/moon.png" alt="" />
+        <span class="brand-name">SleepStop</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-how" href="index.html#how-it-works">How it works</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="support.html">Support</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="index.html#join">Join the waitlist</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <header class="page-header container">
+      <h1>Support</h1>
+      <p>Setup help and answers to the questions testers ask most.</p>
+    </header>
+
+    <section class="page-body">
+      <div class="container support-wrap">
+
+        <div class="contact-card" id="contact">
+          <div>
+            <p class="eyebrow">Contact</p>
+            <h2>Get in touch</h2>
+            <p>Found a bug, or did SleepStop stop the sound at the wrong moment? Tell the
+              developer - beta feedback is exactly what makes detection better.</p>
+          </div>
+          <div class="contact-action">
+            <a class="btn btn-primary" href="mailto:sleepstop.app@gmail.com?subject=SleepStop%20support">Send an email</a>
+            <p class="contact-mail-note">sleepstop.app@gmail.com</p>
+          </div>
+        </div>
+
+        <h2 class="faq-title">Troubleshooting &amp; FAQ</h2>
+        <div class="faq">
+
+          <details open>
+            <summary>Nothing muted overnight</summary>
+            <div class="faq-body">
+              <p>This is almost always <strong>battery settings</strong>: your phone put SleepStop, or the app that came with your watch, to sleep in the background - so the watch's signal never reached your phone. It's the single most common issue. One-time setup on your phone:</p>
+              <ul>
+                <li>Allow SleepStop to keep running in the background - look for
+                  <strong>battery</strong> in its app settings and pick the option that does not
+                  restrict it.</li>
+                <li>Do the same for the app that came with your watch (Garmin Connect, for Garmin
+                  watches) - it passes the signal on, so if your phone pauses it, nothing reaches
+                  SleepStop.</li>
+                <li>If your phone has a setting that puts unused apps to sleep, turn it off for
+                  both of them.</li>
+                <li>Keep <strong>Bluetooth on</strong> and <strong>Garmin Connect running</strong>,
+                  and open SleepStop on the watch to check it says <strong>Armed</strong>.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>The phone works, but nothing from the watch gets through</summary>
+            <div class="faq-body">
+              <p>The tell-tale sign is that <strong>only the watch half</strong> is dead: the phone
+                app looks perfectly healthy - it says it is ready and waiting for your watch
+                - but night after night nothing ever arrives from the watch, and the sound is
+                never stopped. It looks as though the watch app is broken. It usually is not.</p>
+              <p>The app that relays the signal (<strong>Garmin Connect</strong>, for Garmin watches)
+                can fail to pick up a newly installed SleepStop until it is restarted. Fix it once:</p>
+              <ul>
+                <li>In your phone's settings, open the list of apps, find
+                  <strong>Garmin Connect</strong> and choose <strong>Force stop</strong>.</li>
+                <li>Back in SleepStop, open <strong>Settings</strong> and, under
+                  <strong>What detects you're asleep</strong>, switch to <strong>Phone</strong> and
+                  then back to <strong>Smartwatch</strong>. That rebuilds the connection.</li>
+                <li>Open the SleepStop app on your watch once, so it registers itself again.</li>
+              </ul>
+              <p>There is no instant confirmation to look for - the next night is the test. You
+                should only ever need to do this once, right after installing.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>It muted too early or too late</summary>
+            <div class="faq-body">
+              <p><strong>If the sound stops while you are still awake, tap "I was awake -
+                resume" on the notification SleepStop leaves behind.</strong> Your audio picks up
+                again from where it was cut off, and your watch is told it got that one wrong -
+                so it goes straight back to watching instead of standing down until morning. The
+                offer stays up for about ten minutes, then disappears on its own.</p>
+              <p>Detection is tuned to your own resting heart rate, and it keeps improving as it
+                sees more real nights. The most useful thing you can send is your <strong>real</strong>
+                sleep time versus the <strong>time SleepStop stopped the sound</strong>, shown on
+                the History screen - and, if you use a watch, a photo of the <strong>Night
+                graph</strong> from the watch app's menu. That comparison is what sharpens
+                detection most.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>How do I install it?</summary>
+            <div class="faq-body">
+              <p>Not on your own yet. SleepStop isn't in the public stores <strong>just
+                yet</strong>, and the watch half still has to be loaded onto each watch over USB
+                by hand, one model at a time - so there is no install we can simply hand you.</p>
+              <p>The two halves will not reach the public stores together. The watch app goes to
+                the <strong>Garmin Connect IQ Store</strong> first; the phone app stays an invite
+                link for a while longer, with <strong>Google Play</strong> later.
+                <a href="index.html#join">Join the waitlist</a> and we'll let you know as each
+                one lands - install links will appear here too.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>What do I need?</summary>
+            <div class="faq-body">
+              <p>Just an <strong>Android phone</strong>, really - that's the only must-have.
+                SleepStop can run on its own, sensing when you go still or simply counting
+                down a timer you set.</p>
+              <ul>
+                <li>Want sharper detection? Pair a <strong>Garmin watch</strong>. SleepStop
+                  works with <strong>most Garmin models</strong>; it was developed and tested on
+                  an <strong>epix Pro (Gen 2)</strong> and a <strong>fenix 7</strong>. If your
+                  watch isn't supported, the Connect IQ Store simply won't offer SleepStop for
+                  it - so you don't have to check a list.</li>
+                <li>With a watch, you'll also need <strong>Garmin Connect</strong> installed
+                  and signed in, with the watch paired.</li>
+              </ul>
+            </div>
+          </details>
+
+        </div>
+
+        <p class="support-foot">Looking for how your data is handled? See our
+          <a href="privacy.html">Privacy policy</a>.</p>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== Shared footer ==================== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <a class="footer-brand" href="index.html">
+          <img src="assets/moon.png" alt="" />
+          <span>SleepStop</span>
+        </a>
+        <nav class="footer-links">
+          <a href="privacy.html">Privacy</a>
+          <a href="support.html">Support</a>
+          <a href="support.html#contact">Contact</a>
+        </nav>
+      </div>
+      <p class="footer-fine">
+        Independent app, not affiliated with Garmin. Garmin and Connect IQ are
+        trademarks of Garmin Ltd.
+      </p>
+      <p class="footer-copy">© 2026 SleepStop</p>
+    </div>
+  </footer>
+
+</body>
+</html>

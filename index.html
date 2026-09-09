@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SleepStop - never lose your place in an audiobook again</title>
+  <meta name="description" content="SleepStop pauses whatever's playing when you fall asleep - a Smartwatch notices, or your phone can do it alone - so you wake up right where you left off." />
+  <meta name="theme-color" content="#0a0d1a" />
+
+  <!-- Social / link preview (Open Graph + Twitter).
+       NOTE for hosting: add <meta property="og:url" content="<page URL>"> and switch
+       og:image / twitter:image to the ABSOLUTE https URL - most scrapers require it. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="SleepStop" />
+  <meta property="og:title" content="SleepStop - never lose your place in an audiobook again" />
+  <meta property="og:description" content="SleepStop notices when you fall asleep - with a Smartwatch, or just your phone - and pauses whatever's playing, so you wake up right where you left off." />
+  <meta property="og:image" content="assets/og-cover.png" />
+  <meta property="og:image:width" content="2400" />
+  <meta property="og:image:height" content="1260" />
+  <meta property="og:image:alt" content="SleepStop - a gold crescent moon on a night-sky gradient." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SleepStop - never lose your place in an audiobook again" />
+  <meta name="twitter:description" content="SleepStop notices when you fall asleep and pauses your audio - with a Smartwatch, or just your phone." />
+  <meta name="twitter:image" content="assets/og-cover.png" />
+
+  <link rel="icon" type="image/png" href="assets/moon.png" />
+  <link rel="apple-touch-icon" href="assets/moon.png" />
+
+  <!-- Cormorant Garamond is self-hosted (@font-face at the top of styles.css, files in
+       assets/fonts/). It came from Google Fonts until 2026-09-04, which sent every visitor's IP
+       and User-Agent to Google on a page that promises nothing leaves your device. Do not
+       reintroduce a fonts.googleapis.com link here; see the note in styles.css. -->
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ==================== Shared nav ==================== -->
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">
+        <img class="brand-mark" src="assets/moon.png" alt="" />
+        <span class="brand-name">SleepStop</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-how" href="index.html#how-it-works">How it works</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="support.html">Support</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="index.html#join">Join the waitlist</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ==================== Hero ==================== -->
+    <section class="hero">
+      <div class="hero-stars" aria-hidden="true"></div>
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <h1>Never lose your place in an audiobook again.</h1>
+          <p class="hero-sub">
+            Falling asleep to something? SleepStop quietly stops it - music,
+            audiobook, a podcast, whatever you left playing. A smartwatch notices
+            the moment you drift off; no watch, and a simple timer does the job
+            instead. Either way, you wake up right where you left off.
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="index.html#join">Join the waitlist</a>
+            <a class="btn btn-secondary" href="index.html#how-it-works">How it works</a>
+          </div>
+          <div class="status-pill">
+            Launching soon on Garmin Connect IQ Store &amp; Google Play
+          </div>
+        </div>
+
+        <!-- Illustrative night scene - the moment SleepStop pauses the audio.
+             Drawn in HTML/CSS (not a screenshot); decorative, so hidden from
+             screen readers. The 23:28 time matches the Night-graph capture. -->
+        <div class="hero-scene" aria-hidden="true">
+          <img class="scene-moon" src="assets/moon.png" alt="" />
+          <div class="scene-phone">
+            <div class="scene-screen">
+              <p class="scene-label">Now playing</p>
+              <div class="scene-cover"><img src="assets/moon.png" alt="" /></div>
+              <p class="scene-track">Chapter 12</p>
+              <p class="scene-sub">Your audiobook · 41 min left</p>
+              <div class="scene-progress"><span></span></div>
+              <div class="scene-times"><span>23:28</span><span>-41:12</span></div>
+              <div class="scene-controls">
+                <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zM18 6l-9 6 9 6z"/></svg>
+                <span class="scene-play"><svg viewBox="0 0 24 24"><path d="M9 6l11 6-11 6z"/></svg></span>
+                <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 6l9 6-9 6z"/></svg>
+              </div>
+              <div class="scene-chip">Paused - you drifted off at 23:28</div>
+            </div>
+          </div>
+          <div class="scene-watch">
+            <div class="scene-watch-face">
+              <img src="assets/moon.png" alt="" />
+              <span>23:28</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== What it is ==================== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">What it is</p>
+          <h2>A quiet helper for anyone who falls asleep listening.</h2>
+          <p>Set it up once and forget it - SleepStop watches for sleep and pauses your audio so nothing plays on into the night.</p>
+        </div>
+        <ul class="check-list">
+          <li><span><strong>Notices when you're out</strong> - a Smartwatch reads your heart rate and stillness; no watch, and your phone can sense the same stillness on its own, or you can just set a timer.</span></li>
+          <li><span><strong>Mutes any audio</strong> - Music, videos, podcasts, audiobooks.</span></li>
+          <li><span><strong>Winds the sound back</strong> - switch it on and it picks up from before you drifted off, stepping into the previous chapter if that is where you were.</span></li>
+          <li><span><strong>Runs in the background</strong> - arm once, no nightly launch.</span></li>
+          <li><span><strong>Private by design</strong> - everything stays on your own devices.</span></li>
+          <li><span><strong>No account, no ads, no cloud.</strong></span></li>
+          <li><span><strong>Optional "always ready" mode</strong> - pause on sleep without pressing start.</span></li>
+          <li><span><strong>Got it wrong? One tap undoes it</strong> - your audio resumes right where it stopped.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==================== How it works ==================== -->
+    <section class="section section-alt" id="how-it-works">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">How it works</p>
+          <h2>Three steps, then it's automatic.</h2>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <h3>Choose how it notices</h3>
+            <p>Wearing a smartwatch? It follows your heart rate and stillness in the background. Just your phone? It can sense that same stillness on its own - or skip the guessing and set a plain timer instead.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <h3>It works out you're asleep</h3>
+            <p>Watch or phone, it waits until it's actually confident - not just a quiet moment - so it won't stop your audiobook because you paused to think. Went with a timer instead? It just counts down.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <h3>Your audio stops</h3>
+            <p>Your phone pauses whatever's playing - and can wind the sound back to before you drifted off, so you wake up right where you left off.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== Feature rows ====================
+         Ordered like the app's own tabs (Home -> History -> Settings), so the story on
+         the page walks the same path a new user walks in the app. -->
+    <section class="section">
+      <div class="container features">
+        <div class="feature-row">
+          <div class="feature-media">
+            <div class="phone-pair">
+              <div class="phone-pair-item">
+                <div class="phone-frame">
+                  <img src="assets/phone-home.jpg" alt="SleepStop Home screen in Smartwatch mode: status, a sleep-hours summary, always-ready and wind-the-sound-back toggles" />
+                </div>
+                <p class="pair-label">With a Smartwatch</p>
+              </div>
+              <div class="phone-pair-item">
+                <div class="phone-frame">
+                  <img src="assets/phone-home-phone.jpg" alt="SleepStop Home screen in phone-only mode: choose to stop when you drift off, or after a set time" />
+                </div>
+                <p class="pair-label">Just your phone</p>
+              </div>
+            </div>
+            <p class="feature-caption">Home - with a watch, or without one</p>
+          </div>
+          <div class="feature-text">
+            <p class="eyebrow">Set it and forget it</p>
+            <h3>Arm it once, not every night.</h3>
+            <p>With a Smartwatch, turn on "always ready" and SleepStop waits quietly in the
+              background - no opening the app before bed. Just your phone? Pick "when I
+              drift off" or "after a set time" on the very same screen, and press start
+              when you're ready to sleep.</p>
+          </div>
+        </div>
+
+        <div class="feature-row">
+          <div class="feature-media">
+            <div class="device-combo">
+              <div class="phone-frame">
+                <img src="assets/phone-history.jpg" alt="SleepStop History: a timestamped list of the nights it muted your audio." />
+              </div>
+              <div class="watch-frame">
+                <img src="assets/watch-nightgraph.png" alt="Night graph on the Epix Pro: an overnight heart-rate trace with the sleep-onset marker" />
+              </div>
+            </div>
+            <p class="feature-caption">History on your phone · the night's trace on your watch</p>
+          </div>
+          <div class="feature-text">
+            <p class="eyebrow">See your night</p>
+            <h3>Wake up and see what happened.</h3>
+            <p>Every stop lands in your history, timestamped - with a plain-language note
+              if something couldn't be wound back. Open a night to see the heart-rate
+              trace your watch recorded overnight - where it settled, and the moment it
+              decided you were asleep.</p>
+          </div>
+        </div>
+
+        <div class="feature-row">
+          <div class="feature-media">
+            <div class="phone-frame">
+              <img src="assets/phone-settings.jpg" alt="SleepStop Settings screen: a phone-or-watch source picker and a sleep-hours row" />
+            </div>
+            <p class="feature-caption">Settings - pick your source, set your hours</p>
+          </div>
+          <div class="feature-text">
+            <p class="eyebrow">Tuned to your body</p>
+            <h3>"Asleep" means asleep for you.</h3>
+            <p>Choose a Smartwatch or just your phone right here, and tell SleepStop
+              the hours you actually sleep. With a watch, detection tunes itself to your
+              own resting heart rate rather than a one-size-fits-all number - it keeps
+              sharpening itself the more real nights it sees, and telling it your actual
+              sleep hours speeds that up.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== Founder memo ==================== -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">From the maker</p>
+        </div>
+        <div class="memo-card">
+          <p class="memo-lead">I built SleepStop for one small, nightly annoyance: I fall
+            asleep to audiobooks, and I'd wake up to find the story had played on for
+            hours - with no idea where I'd drifted off.</p>
+          <p>Sleep timers never fit. Some nights I'm out in ten minutes, some nights not
+            at all - a fixed timer either cuts the story short or lets it run all night.
+            So I made my watch do the noticing instead. When it sees me fall asleep, it
+            quietly tells my phone to pause, and in the morning I'm right where I left
+            off.</p>
+          <p>It's an independent, one-person project, and I'm still refining it night by
+            night. If your nights sound like mine, I'd love for you to try it and tell me
+            how it goes.</p>
+          <p class="memo-sign">- Wojciech</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== Final CTA (dawn) ==================== -->
+    <section class="cta-final" id="join">
+      <div class="container">
+        <h2>Calmer nights, one tap away.</h2>
+        <p>Launching soon on the Garmin Connect IQ Store and Google Play.
+          Leave your address and we'll write to you the day it lands.</p>
+        <a class="btn btn-primary" href="mailto:sleepstop.app@gmail.com?subject=SleepStop%20waitlist">Join the waitlist</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== Shared footer ==================== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <a class="footer-brand" href="index.html">
+          <img src="assets/moon.png" alt="" />
+          <span>SleepStop</span>
+        </a>
+        <nav class="footer-links">
+          <a href="privacy.html">Privacy</a>
+          <a href="support.html">Support</a>
+          <a href="support.html#contact">Contact</a>
+        </nav>
+      </div>
+      <p class="footer-fine">
+        Independent app, not affiliated with Garmin. Garmin and Connect IQ are
+        trademarks of Garmin Ltd.
+      </p>
+      <p class="footer-copy">© 2026 SleepStop</p>
+    </div>
+  </footer>
+
+</body>
+</html>
