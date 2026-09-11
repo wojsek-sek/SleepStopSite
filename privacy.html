@@ -61,7 +61,7 @@
     <section class="page-body">
       <div class="container">
         <article class="prose">
-          <p class="effective-date">Effective date: 3 September 2026</p>
+          <p class="effective-date">Effective date: 11 September 2026</p>
 
           <p>SleepStop is a two-part application: a <strong>phone app</strong> (Android) that
             mutes whatever audio is playing when you fall asleep, and a companion
@@ -92,13 +92,16 @@
               solely to pause/mute that audio when a "fell asleep" signal arrives. The app does
               not read, record, or transmit the audio itself.</li>
             <li><strong>Notification access (a special permission you grant separately, not a
-              pop-up)</strong> - if you turn on <em>Wind the sound back</em>, SleepStop asks for
-              this so it can see which app is playing and its track title/position, in order to
-              seek that audio back to roughly where you fell asleep, and to undo a mute you tap
-              "I was awake" on. <strong>SleepStop reads only this playback information - never
+              pop-up)</strong> - SleepStop asks for this so it can see which app is playing and its
+              track title/position. With a watch, that is what lets <em>Wind the sound back</em>
+              seek the audio to roughly where you fell asleep and undo a mute you tap "I was
+              awake" on. Without a watch, it is what lets History and Stats name the app and
+              show where the audio was left (<em>What you fall asleep to</em>) - nothing is wound
+              back in that mode. <strong>SleepStop reads only this playback information - never
               the content of your notifications</strong> (messages, emails, or anything else). You
-              can revoke this at any time in Android's notification-access settings, and rewinding
-              simply stops working until you grant it again.</li>
+              can revoke this at any time in Android's notification-access settings; rewinding stops,
+              and History and Stats can only say that something was stopped, not what, until
+              you grant it again.</li>
             <li><strong>Post notifications</strong> - a separate, ordinary permission used only
               to show the "sleep monitor is running" notification Android requires for a
               background service, and the brief "I was awake - resume" offer after a mute.</li>
@@ -115,9 +118,9 @@
               app on the phone (currently Garmin Connect Mobile).</li>
             <li>The phone stores your <strong>settings</strong> and a <strong>history of mute
               events</strong> <strong>locally</strong> on the phone (Android app storage). When
-              <em>Wind the sound back</em> is on, that history includes the app name and
-              track/episode title read via Notification access above, and where playback
-              resumed - so History can show you what happened. Any received watch trace records
+              Notification access is granted, that history includes the app name and
+              track/episode title read via it, and where playback was left - so History can
+              show you what happened and Stats can tell you what you usually fall asleep to. Any received watch trace records
               are stored locally the same way. This data powers the History and Night graph
               screens and never leaves the phone.</li>
             <li>The phone sends a little information <strong>back to the watch</strong> over that
@@ -146,8 +149,9 @@
             <li><strong>Foreground service (special use)</strong> - to keep the sleep monitor /
               watch receiver running while your music app is in front and the screen is off;
               this is what lets muting work at night.</li>
-            <li><strong>Notification access</strong> (see above) - optional, only for
-              <em>Wind the sound back</em> and the undo offer.</li>
+            <li><strong>Notification access</strong> (see above) - optional; powers
+              <em>Wind the sound back</em> and the undo offer with a watch, and the app name in
+              History and Stats without one.</li>
             <li><strong>Post notifications</strong> - to display the required ongoing
               foreground-service notification, and the brief undo offer after a mute.</li>
             <li><strong>Ignore battery optimizations (requested, optional)</strong> - overnight
