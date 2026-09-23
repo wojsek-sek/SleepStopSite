@@ -61,7 +61,7 @@
     <section class="page-body">
       <div class="container">
         <article class="prose">
-          <p class="effective-date">Effective date: 11 September 2026</p>
+          <p class="effective-date">Effective date: 23 September 2026</p>
 
           <p>SleepStop is a two-part application: a <strong>phone app</strong> (Android) that
             mutes whatever audio is playing when you fall asleep, and a companion
@@ -162,6 +162,10 @@
             <li><strong>Wake lock</strong> - briefly keeps the processor awake while a rewind
               steps back through several chapters, a few seconds at most, so the sequence
               cannot stall for minutes if the phone falls back asleep mid-sequence.</li>
+            <li><strong>Run at startup</strong> - only if you left watch muting switched on (a session
+              in progress, or <em>Always ready</em>): after the phone restarts or SleepStop is
+              updated, the watch receiver is started again on its own, so that night is not
+              silently lost until you next open the app. Otherwise it does nothing.</li>
             <li><strong>Vibrate</strong> - for optional feedback.</li>
             <li><strong>Internet</strong> - required by the Garmin Connect IQ SDK to relay the
               watch's Bluetooth message through the Garmin Connect Mobile app, and present as a
