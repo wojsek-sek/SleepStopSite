@@ -61,7 +61,7 @@
     <section class="page-body">
       <div class="container">
         <article class="prose">
-          <p class="effective-date">Effective date: 23 September 2026</p>
+          <p class="effective-date">Effective date: 3 October 2026</p>
 
           <p>SleepStop is a two-part application: a <strong>phone app</strong> (Android) that
             mutes whatever audio is playing when you fall asleep, and a companion
@@ -113,16 +113,18 @@
           <p>All information stays <strong>on your own devices</strong>:</p>
           <ul>
             <li>The watch records a heart-rate/activity trace locally on the watch itself, in the
-              watch app's own storage, and sends it, plus a "fell asleep" event, to the phone over
-              a <strong>local Bluetooth (BLE)</strong> connection relayed by your watch's companion
-              app on the phone (currently Garmin Connect Mobile).</li>
+              watch app's own storage. It sends the phone only two things, over a <strong>local
+              Bluetooth (BLE)</strong> connection relayed by your watch's companion app on the phone
+              (currently Garmin Connect Mobile): a "fell asleep" event, and an hourly connection
+              check that carries no data, so the phone can warn you if that connection stops
+              working. The trace itself stays on the watch (beta testers' builds are the one
+              exception - see below).</li>
             <li>The phone stores your <strong>settings</strong> and a <strong>history of mute
               events</strong> <strong>locally</strong> on the phone (Android app storage). When
               Notification access is granted, that history includes the app name and
               track/episode title read via it, and where playback was left - so History can
-              show you what happened and Stats can tell you what you usually fall asleep to. Any received watch trace records
-              are stored locally the same way. This data powers the History and Night graph
-              screens and never leaves the phone.</li>
+              show you what happened and Stats can tell you what you usually fall asleep to. This
+              data powers the History and Stats screens and never leaves the phone.</li>
             <li>The phone sends a little information <strong>back to the watch</strong> over that
               same local Bluetooth link: that you tapped "I was awake" on a stop, that a stop
               silenced nothing, and the sleep hours you've set - so the watch can
