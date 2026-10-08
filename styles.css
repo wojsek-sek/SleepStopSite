@@ -688,9 +688,10 @@ p { margin: 0 0 var(--space-lg); }
 .shot-frame span { color: var(--text-faint); font-size: 0.9rem; }
 .shot-frame small { color: var(--text-faint); opacity: 0.7; font-size: 0.75rem; }
 
-/* Portrait phone — a dark bezel around a captured app screen. The screenshots are
-   pre-cropped to just the app UI (OS status bar + nav bar removed), so the frame shows
-   the whole image at its natural height — no object-fit cropping. */
+/* Portrait phone — a dark bezel around a captured app screen. Since 2026-10-08 the screenshots
+   KEEP the (demo-mode, clean) status bar and the gesture bar: cropped to the bare app UI, the
+   app's own titles and tab labels ran into the frame's rounded corners (his report). The frame
+   shows the whole image at its natural height — no object-fit cropping. */
 .phone-frame {
   width: 100%;
   max-width: 260px;
@@ -821,6 +822,13 @@ p { margin: 0 0 var(--space-lg); }
 }
 .cta-final h2 { margin-bottom: var(--space-md); }
 .cta-final p { color: var(--text-muted); max-width: 44ch; margin: 0 auto var(--space-xl); }
+/* Two store buttons since launch (2026-10-08): Play first, the watch app beside it. */
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
 
 /* ==========================================================================
    Generic page header (Privacy / Support)
@@ -924,14 +932,16 @@ p { margin: 0 0 var(--space-lg); }
 .faq-body p,
 .faq-body li { color: var(--text-muted); }
 .faq-body p:last-child { margin-bottom: 0; }
-.faq-body ul { padding-left: 1.25em; margin: 0; }
+.faq-body ul,
+.faq-body ol { padding-left: 1.25em; margin: 0; }
 .faq-body li { margin-bottom: var(--space-sm); }
 .faq-body li:last-child { margin-bottom: 0; }
 .faq-body li::marker { color: var(--accent); }
 .faq-body strong { color: var(--text-prime); }
 
 .support-foot { margin-top: var(--space-2xl); color: var(--text-muted); }
-.support-foot a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.support-foot a,
+.faq-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
 
 /* Simple placeholder frame for content still to come */
 .placeholder {
