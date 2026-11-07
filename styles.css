@@ -787,6 +787,18 @@ p { margin: 0 0 var(--space-lg); }
   margin: 0;
 }
 
+/* ---- Demo video (portrait 9:16, centered) ---------------------------------- */
+.demo-video {
+  width: min(100%, 320px);
+  margin-inline: auto;
+  border-radius: 26px;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  background: var(--bg);
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.55);
+}
+.demo-video video { display: block; width: 100%; height: auto; aspect-ratio: 9 / 16; background: var(--bg); }
+
 /* ---- Founder memo -------------------------------------------------------- */
 .memo-card {
   max-width: 720px;
