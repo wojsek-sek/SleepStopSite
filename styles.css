@@ -694,10 +694,10 @@ p { margin: 0 0 var(--space-lg); }
    shows the whole image at its natural height — no object-fit cropping. */
 .phone-frame {
   width: 100%;
-  max-width: 260px;
+  max-width: 220px;
   margin-inline: auto;
-  border-radius: 34px;
-  padding: 9px;
+  border-radius: 28px;
+  padding: 5px;
   background: linear-gradient(155deg, #3a3f4d 0%, #20242f 45%, #12151d 100%);
   box-shadow:
     0 26px 60px rgba(0, 0, 0, 0.55),
@@ -708,7 +708,7 @@ p { margin: 0 0 var(--space-lg); }
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 26px;
+  border-radius: 23px;
   background: var(--bg);
 }
 
@@ -759,7 +759,7 @@ p { margin: 0 0 var(--space-lg); }
   align-items: center;
   gap: var(--space-sm);
   flex: 1 1 140px;
-  max-width: 180px;
+  max-width: 220px;
 }
 .phone-pair .phone-frame { max-width: 100%; margin-inline: 0; }
 .pair-label {
@@ -968,11 +968,20 @@ p { margin: 0 0 var(--space-lg); }
   transform-origin: 50% 100%; /* grow upward from the bottom edge, away from the caption below */
   transition: transform 0.35s ease;
 }
-.feature-media > .phone-frame:hover,
-.phone-pair .phone-frame:hover,
-.device-combo:hover {
-  transform: translateY(-10px) scale(1.09);
-  z-index: 2;
+/* Only for a mouse in the side-by-side layout. On touch screens :hover sticks after a tap, and in the
+   stacked mobile layout the zoomed phone ran over the text (his report 2026-11-07). */
+@media (hover: hover) and (pointer: fine) and (min-width: 861px) {
+  .feature-media > .phone-frame:hover,
+  .phone-pair .phone-frame:hover,
+  .device-combo:hover {
+    transform: translateY(-10px) scale(1.09);
+    z-index: 2;
+  }
+}
+/* Narrow screens: the two Home phones stack, so every phone on the page is the same size. */
+@media (max-width: 600px) {
+  .phone-pair { flex-direction: column; align-items: center; gap: var(--space-xl); }
+  .phone-pair-item { flex: none; width: 220px; max-width: 100%; }
 }
 
 /* ==========================================================================
