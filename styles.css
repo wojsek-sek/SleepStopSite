@@ -30,8 +30,8 @@
    here because Cormorant declares NO Reserved Font Name (checked in the licence
    text itself, not assumed), so the family name may stay as it is.
 
-   400 is not decorative: .memo-sign, .scene-track and .scene-watch-face set the
-   display family without a weight and therefore inherit it. Adding a weight to
+   400 is not decorative: .memo-sign sets the
+   display family without a weight and therefore inherits it. Adding a weight to
    this stylesheet that has no @font-face here now means a SILENT fallback to
    Georgia rather than a missing file — check this block when you do.
    ------------------------------------------------------------------------ */
@@ -354,7 +354,7 @@ p { margin: 0 0 var(--space-lg); }
   position: relative;
   overflow: hidden;
   text-align: center;
-  padding-block: var(--space-4xl) var(--space-3xl);
+  padding-block: var(--space-2xl) var(--space-3xl);
 }
 /* CSS star field — faint scattered dots, no images. */
 .hero-stars {
@@ -374,187 +374,76 @@ p { margin: 0 0 var(--space-lg); }
     radial-gradient(1.2px 1.2px at 76% 82%, rgba(224, 196, 140, 0.35), transparent);
   background-repeat: no-repeat;
 }
-/* Split hero: copy on the left, the night scene on the right (stacks on small screens). */
+/* Centered hero: headline, copy and buttons on top, the product film full width below. */
 .hero-inner {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  align-items: center;
-  gap: var(--space-3xl);
-  text-align: left;
+  text-align: center;
 }
+.hero-copy { max-width: 860px; margin-inline: auto; }
 /* Slightly smaller than the global h1 so the headline sets in two clean lines. */
-.hero h1 { font-size: clamp(2.2rem, 4.6vw, 3.4rem); max-width: 21ch; }
+.hero h1 { font-size: clamp(2.1rem, 4.4vw, 3.1rem); max-width: 22ch; margin-inline: auto; }
 .hero-sub {
-  max-width: 50ch;
-  margin: var(--space-lg) 0 var(--space-2xl);
+  max-width: 76ch;
+  margin: var(--space-md) auto var(--space-xl);
   color: var(--text-muted);
-  font-size: 1.18rem;
+  font-size: 1.05rem;
 }
 .hero-cta {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: var(--space-md);
 }
 
-/* ---- Hero night scene (drawn, no screenshots) ---------------------------- */
-.hero-scene {
+/* ---- Hero product film (landscape 16:9, silent, captions in the picture) ------- */
+.hero-film { margin: var(--space-2xl) 0 0; }
+.hero-pill { margin-top: var(--space-xl); }
+.film-frame {
   position: relative;
-  width: min(100%, 400px);
-  margin-inline: auto;
-  padding: 52px 0 40px; /* air for the moon above and the watch below */
-}
-/* Upper-LEFT on purpose: the phone owns the right half and the watch the lower-left
-   corner, so this is the only open sky — on the right the moon slid behind the phone
-   bezel (maintainer feedback 2026-07-17). z-index keeps it in front even if a few px
-   of the float animation graze the phone's corner. */
-.scene-moon {
-  position: absolute;
-  top: 0;
-  left: -6%;
-  z-index: 2;
-  width: clamp(76px, 8vw, 104px);
-  filter: drop-shadow(0 0 36px rgba(224, 196, 140, 0.3));
-  animation: moon-float 8s ease-in-out infinite;
-}
-@keyframes moon-float {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-12px); }
-}
-
-/* The phone playing the audiobook — same bezel language as .phone-frame. */
-.scene-phone {
-  position: relative;
-  z-index: 1;
-  width: min(78%, 292px);
-  margin-left: auto;  /* sit right so the watch can own the lower-left corner */
-  margin-right: 8px;
-  border-radius: 34px;
-  padding: 9px;
-  background: linear-gradient(155deg, #3a3f4d 0%, #20242f 45%, #12151d 100%);
-  box-shadow:
-    0 26px 60px rgba(0, 0, 0, 0.55),
-    inset 0 2px 3px rgba(255, 255, 255, 0.16),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.6);
-}
-.scene-screen {
-  border-radius: 26px;
-  background: linear-gradient(180deg, #0c1020 0%, #131834 100%);
-  padding: var(--space-xl) var(--space-lg) var(--space-lg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.scene-label {
-  margin: 0 0 var(--space-lg);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-size: 0.66rem;
-  color: var(--text-faint);
-}
-.scene-cover {
-  width: 96px;
-  height: 96px;
-  border-radius: var(--radius-lg);
-  display: grid;
-  place-items: center;
-  background:
-    radial-gradient(80% 80% at 50% 20%, rgba(224, 196, 140, 0.16), transparent 70%),
-    var(--card);
-  border: 1px solid var(--card-border);
-  margin-bottom: var(--space-lg);
-}
-.scene-cover img { width: 40px; opacity: 0.9; }
-.scene-track {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  color: var(--text-prime);
-}
-.scene-sub { margin: 2px 0 var(--space-lg); font-size: 0.78rem; color: var(--text-muted); }
-.scene-progress {
-  width: 100%;
-  height: 4px;
-  border-radius: var(--radius-pill);
-  background: var(--card-border);
+  aspect-ratio: 16 / 9;
+  border-radius: 20px;
   overflow: hidden;
+  border: 1px solid var(--card-border);
+  background: var(--bg);
+  box-shadow:
+    0 40px 90px rgba(0, 0, 0, 0.55),
+    0 0 140px rgba(224, 196, 140, 0.07);
 }
-.scene-progress span {
-  display: block;
-  width: 36%;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--accent-deep), var(--accent));
-}
-.scene-times {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.7rem;
-  color: var(--text-faint);
-  margin-top: 6px;
-}
-.scene-controls {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xl);
-  margin: var(--space-md) 0 var(--space-lg);
-}
-.scene-controls svg { width: 20px; height: 20px; fill: var(--text-muted); }
-.scene-play {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
+.film-frame video { display: block; width: 100%; height: 100%; object-fit: cover; background: var(--bg); }
+/* Pause / play: the 2.2.2 control for moving content. 44 px target, gold ring, bottom-right. */
+.film-toggle {
+  position: absolute;
+  right: 16px;
+  bottom: 18px;
+  width: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
-  background-image: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
-  box-shadow: 0 8px 24px rgba(224, 196, 140, 0.25);
-}
-.scene-play svg { width: 22px; height: 22px; fill: var(--on-accent); margin-left: 3px; }
-.scene-chip {
-  padding: 0.45em 1em;
-  border-radius: var(--radius-pill);
-  border: 1px solid rgba(224, 196, 140, 0.35);
-  background: rgba(224, 196, 140, 0.1);
-  color: var(--accent);
-  font-size: 0.72rem;
-  white-space: nowrap;
-}
-
-/* The watch that noticed — overlapping the phone's lower-left corner. */
-.scene-watch {
-  position: absolute;
-  bottom: 4px;
-  left: 0;
-  z-index: 2;
-  width: 118px;
-  aspect-ratio: 1;
+  padding: 0;
   border-radius: 50%;
-  padding: 8px;
-  background: linear-gradient(145deg, #4a4f5e 0%, #262b38 45%, #14171f 100%);
-  box-shadow:
-    0 20px 44px rgba(0, 0, 0, 0.55),
-    inset 0 2px 3px rgba(255, 255, 255, 0.18),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(224, 196, 140, 0.5);
+  background: rgba(10, 13, 26, 0.72);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: var(--accent);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
 }
-.scene-watch-face {
-  width: 100%;
+.film-toggle:hover { border-color: var(--accent); background: rgba(10, 13, 26, 0.9); }
+.film-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.film-toggle svg { width: 18px; height: 18px; fill: currentColor; }
+.film-toggle[data-state="playing"] .i-play { display: none; }
+.film-toggle[data-state="paused"] .i-pause { display: none; }
+/* Thin gold progress line along the bottom edge. */
+.film-progress { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(231, 236, 250, 0.1); }
+.film-progress span {
+  display: block;
   height: 100%;
-  border-radius: 50%;
-  background: radial-gradient(90% 90% at 50% 30%, #10142a 0%, #05070d 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-}
-.scene-watch-face img { width: 26px; }
-.scene-watch-face span {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  color: var(--accent);
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.28s linear;
 }
 
 /* Status pill */
@@ -787,18 +676,6 @@ p { margin: 0 0 var(--space-lg); }
   margin: 0;
 }
 
-/* ---- Demo video (portrait 9:16, centered) ---------------------------------- */
-.demo-video {
-  width: min(100%, 320px);
-  margin-inline: auto;
-  border-radius: 26px;
-  overflow: hidden;
-  border: 1px solid var(--card-border);
-  background: var(--bg);
-  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.55);
-}
-.demo-video video { display: block; width: 100%; height: auto; aspect-ratio: 9 / 16; background: var(--bg); }
-
 /* ---- Founder memo -------------------------------------------------------- */
 .memo-card {
   max-width: 720px;
@@ -999,15 +876,6 @@ p { margin: 0 0 var(--space-lg); }
 /* ==========================================================================
    Responsive
    ========================================================================== */
-@media (max-width: 960px) {
-  /* Stack the hero: copy centered on top, scene below. */
-  .hero-inner { grid-template-columns: 1fr; text-align: center; }
-  .hero h1 { margin-inline: auto; }
-  .hero-sub { margin-inline: auto; }
-  .hero-cta { justify-content: center; }
-  .hero-scene { width: min(100%, 340px); margin-top: var(--space-lg); }
-}
-
 @media (max-width: 860px) {
   .steps { grid-template-columns: 1fr; }
   /* Stack feature rows; keep media above text consistently (reset the flip). */
@@ -1036,6 +904,10 @@ p { margin: 0 0 var(--space-lg); }
   .nav-links .nav-cta { display: none; }
 
   .container { padding-inline: var(--space-lg); }
+  /* The film runs edge to edge so the captions stay as large as possible. */
+  .hero-film { margin-inline: calc(var(--space-lg) * -1); margin-top: var(--space-2xl); }
+  .film-frame { border-radius: 0; border-inline: 0; }
+  .film-toggle { right: 12px; bottom: 14px; }
   .section { padding-block: var(--space-3xl); }
 
   /* Stack the footer top so the link row can't clip off the right edge. */

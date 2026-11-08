@@ -69,60 +69,30 @@
             <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=app.sleepstop.ws">Get it on Google Play</a>
             <a class="btn btn-secondary" href="./#how-it-works">How it works</a>
           </div>
-          <div class="status-pill">
-            On Google Play &amp; the Garmin Connect IQ Store
-          </div>
         </div>
 
-        <!-- Illustrative night scene - the moment SleepStop pauses the audio.
-             Drawn in HTML/CSS (not a screenshot); decorative, so hidden from
-             screen readers. -->
-        <div class="hero-scene" aria-hidden="true">
-          <img class="scene-moon" src="assets/moon.png" alt="" />
-          <div class="scene-phone">
-            <div class="scene-screen">
-              <p class="scene-label">Now playing</p>
-              <div class="scene-cover"><img src="assets/moon.png" alt="" /></div>
-              <p class="scene-track">Chapter 12</p>
-              <p class="scene-sub">Your audiobook · 41 min left</p>
-              <div class="scene-progress"><span></span></div>
-              <div class="scene-times"><span>23:28</span><span>-41:12</span></div>
-              <div class="scene-controls">
-                <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zM18 6l-9 6 9 6z"/></svg>
-                <span class="scene-play"><svg viewBox="0 0 24 24"><path d="M9 6l11 6-11 6z"/></svg></span>
-                <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 6l9 6-9 6z"/></svg>
-              </div>
-              <div class="scene-chip">Paused - you drifted off at 23:28</div>
-            </div>
+        <!-- Product film (silent, captions are in the picture, 49.5 s loop). Starts muted when the hero is
+             in view, pauses when it scrolls away; the button is the WCAG 2.2.2 pause control. Under
+             prefers-reduced-motion it does not start by itself. JS picks the 1280 px file on small screens
+             and only then starts loading; without JS the visitor sees the poster. -->
+        <figure class="hero-film">
+          <div class="film-frame">
+            <video id="hero-film" muted loop playsinline preload="none" width="1920" height="1080"
+                   poster="assets/sleepstop-film-poster.jpg"
+                   aria-label="Silent product film with captions: you fall asleep to an audiobook that keeps playing. SleepStop stops it, with a Smartwatch or with the phone alone. The History screen shows when you fell asleep and where the audio stopped, and Stats show when you usually fall asleep and which app gets you there fastest.">
+              Your browser can't play this video.
+            </video>
+            <button class="film-toggle" id="film-toggle" type="button" data-state="paused" aria-label="Play video">
+              <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+              <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5l11 6.5-11 6.5z"/></svg>
+            </button>
+            <div class="film-progress" aria-hidden="true"><span></span></div>
           </div>
-          <div class="scene-watch">
-            <div class="scene-watch-face">
-              <img src="assets/moon.png" alt="" />
-              <span>23:28</span>
-            </div>
-          </div>
+        </figure>
+        <div class="status-pill hero-pill">
+          On Google Play &amp; the Garmin Connect IQ Store
         </div>
-      </div>
-    </section>
-
-    <!-- ==================== See it in action ====================
-         Silent 36 s walkthrough (the captions are in the picture). Lazy: preload="none" + poster, so the
-         1.6 MB file is only fetched when someone presses play. -->
-    <section class="section" id="demo">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">See it in action</p>
-          <h2>From falling asleep to waking up right where you left off.</h2>
-          <p>A 36-second walkthrough. No sound needed.</p>
-        </div>
-        <div class="demo-video">
-          <video controls playsinline preload="none" width="720" height="1280"
-                 poster="assets/sleepstop-demo-poster.jpg"
-                 aria-label="Short silent video: you fall asleep to a podcast, SleepStop notices and stops the audio, and in the morning History shows where it stopped so you carry on from there.">
-            <source src="assets/sleepstop-demo.mp4" type="video/mp4" />
-            Your browser can't play this video.
-          </video>
-        </div>
+        <noscript><style>.film-toggle, .film-progress { display: none; }</style></noscript>
       </div>
     </section>
 
@@ -335,5 +305,53 @@
     </div>
   </footer>
 
+  <script>
+    /* Hero film: muted autoplay while in view, a pause/play button, no autostart for reduced motion.
+       Plain JS, no libraries, nothing is sent anywhere. */
+    (function () {
+      var v = document.getElementById('hero-film');
+      var btn = document.getElementById('film-toggle');
+      if (!v || !btn) return;
+      var bar = v.parentNode.querySelector('.film-progress span');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var narrow = window.matchMedia('(max-width: 700px)').matches;
+      var userPaused = false, last = 0;
+
+      function label(playing) {
+        btn.setAttribute('aria-label', playing ? 'Pause video' : 'Play video');
+        btn.setAttribute('data-state', playing ? 'playing' : 'paused');
+      }
+      function play() {
+        var p = v.play();
+        if (p && p.catch) p.catch(function () { label(false); });
+      }
+
+      v.muted = true;
+      v.loop = !reduce;
+      v.preload = 'auto';
+      v.src = narrow ? 'assets/sleepstop-film-1280.mp4' : 'assets/sleepstop-film.mp4';
+      v.addEventListener('play', function () { label(true); });
+      v.addEventListener('pause', function () { label(false); });
+      v.addEventListener('timeupdate', function () {
+        if (!bar || !v.duration) return;
+        var r = v.currentTime / v.duration;
+        bar.style.transition = r < last ? 'none' : '';
+        bar.style.transform = 'scaleX(' + r + ')';
+        last = r;
+      });
+      btn.addEventListener('click', function () {
+        if (v.paused) { userPaused = false; play(); } else { userPaused = true; v.pause(); }
+      });
+
+      if (reduce) return;
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          if (es[0].isIntersecting) { if (!userPaused) play(); } else { v.pause(); }
+        }, { threshold: 0.25 }).observe(v);
+      } else {
+        play();
+      }
+    })();
+  </script>
 </body>
 </html>
