@@ -282,7 +282,7 @@ p { margin: 0 0 var(--space-lg); }
   align-items: center;
   gap: var(--space-sm);
 }
-.brand-mark { width: 34px; height: 34px; }
+.brand-mark { width: 40px; height: auto; }
 .brand-name {
   font-family: var(--font-display);
   font-size: 1.5rem;
@@ -332,7 +332,7 @@ p { margin: 0 0 var(--space-lg); }
   font-weight: 600;
   color: var(--text-prime);
 }
-.footer-brand img { width: 26px; height: 26px; }
+.footer-brand img { width: 32px; height: auto; }
 .footer-links {
   display: flex;
   flex-wrap: wrap;
